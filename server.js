@@ -4,16 +4,20 @@ const fetch = require("node-fetch");
 const cors = require("cors");
 const redis = require('redis');
 
+const token = process.env['TOKEN']
+const host = process.env['HOST']
+const password = process.env['PASSWORD']
+
 const config = require("./config.json");
 const snowflakeToDate = require("./utils");
 const { USER_FLAGS, APPLICATION_FLAGS } = require("./Constants");
 
 const client = redis.createClient({
     socket: {
-        host: config.redis.host,
-        port: config.redis.port
+        host: process.env.host,
+        port: 14840
     },
-    password: config.redis.password
+    password: process.env.password
 })
 
 client.connect();
@@ -136,5 +140,5 @@ app.get("*", function (req, res) {
     res.status(404).send("404 - Not Found");
 });
 
-app.listen(process.env.port || config.port, "0.0.0.0");
-console.log(`Server opened at port ${process.env.port || config.port}`);
+app.listen(80, "0.0.0.0");
+console.log(`Server opened at port 80`);
